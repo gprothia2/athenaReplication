@@ -1,6 +1,6 @@
 # Replicating data using Athena scripts
 
-This project helps you replicate your tesst data in S3 buckets using Athena scripts
+This project helps you replicate test data in S3 buckets using Athena scripts
 
 ### Procedure to replicate data is explained using 2 sample data files
 
