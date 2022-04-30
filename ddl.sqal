@@ -1,0 +1,56 @@
+CREATE EXTERNAL TABLE `users`(
+  `userid` bigint,
+  `username` string,
+  `firstname` string,
+  `lastname` string,
+  `city` string,
+  `state` string,
+  `email` string,
+  `phone` string,
+  `likesports` boolean,
+  `liketheatre` boolean,
+  `likeconcerts` boolean,
+  `likejazz` boolean,
+  `likeclassical` boolean,
+  `likeopera` boolean,
+  `likerock` boolean,
+  `likevegas` boolean,
+  `likebroadway` boolean,
+  `likemusicals` boolean,
+  `original_userid` bigint
+)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '|'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.mapred.TextInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  's3://<<bucket_name>>/users/'
+  
+  
+  
+  CREATE EXTERNAL TABLE `listings`(
+  `listid` bigint,
+  `sellerid` bigint,
+  `eventid` bigint,
+  `dateid` bigint,
+  `numtickets` bigint,
+  `priceperticket` double,
+  `totalprice` double,
+  `listtime` string)
+ROW FORMAT DELIMITED
+  FIELDS TERMINATED BY '|'
+STORED AS INPUTFORMAT
+  'org.apache.hadoop.mapred.TextInputFormat'
+OUTPUTFORMAT
+  'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+  
+  
+  Step 3 : Create a View using Athena that returns a sequence of rows of integers.o
+
+CREATE OR REPLACE VIEW "replication_scale_v" AS
+SELECT x
+FROM UNNEST("sequence"(1, 10)) t (x)
+LOCATION
+  's3://<<bucket_name>>/listings/'
